@@ -3,9 +3,9 @@ const config = require('./config');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
 const fakeHMR = require('./fake-hmr');
-
+const mongoose = require('mongoose');
+const cors = require('cors');
 const compiler = webpack(webpackConfig);
-
 const watching = compiler.watch({
   // Example watchOptions
   aggregateTimeout: 300,
@@ -29,7 +29,13 @@ app.use(express.static('public'));
 
 // require('./webpackRunner');
 
+/*mongoose.connect('mongodb+srv://dwmdb:<dwmdb>@cluster0.rik3k.mongodb.net/dwmdb?retryWrites=true&w=majority',{useUnifiedTopology: true  });*/
 
+
+mongoose.connect('mongodb+srv://dwmdb:dwmdb@cluster0.rik3k.mongodb.net/dwmdb?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
+
+app.use(cors());
+app.use(express.json());
 //get,post,put,delete
 
 //GET
