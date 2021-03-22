@@ -3,6 +3,7 @@ const config = require('./config');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
 const fakeHMR = require('./fake-hmr');
+const clienteController = require('./controllers/ClienteController');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const compiler = webpack(webpackConfig);
@@ -29,50 +30,19 @@ app.use(express.static('public'));
 
 // require('./webpackRunner');
 
-/*mongoose.connect('mongodb+srv://dwmdb:<dwmdb>@cluster0.rik3k.mongodb.net/dwmdb?retryWrites=true&w=majority',{useUnifiedTopology: true  });*/
-
-
 mongoose.connect('mongodb+srv://dwmdb:dwmdb@cluster0.rik3k.mongodb.net/dwmdb?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(cors());
 app.use(express.json());
 //get,post,put,delete
 
-//GET
-app.get('/', (req, res) => {
-  res.json({
-    "pessoas": 
-    [
-      {"nome": "Usuario 1", "setor": "Gerencia de processos", "privilégio": "Usuario"},
-      {"nome": "Usuario 2", "setor": "Diretoria de processos", "privilégio": "Usuario"},
-      {"nome": "Usuario 3", "setor": "Diretoria de gestão de pessoas", "privilégio": "Usuario"},
-      {"nome": "Usuario 4", "setor": "Gerencia de banco de dados", "privilégio": "Administrador"},
-      {"nome": "Usuario 5", "setor": "Diretoria de infraestrutura de rede", "privilégio": "Administrador"}
-    ]  
-  })
-});
-app.get('/pessoas', (req, res) => {
-  res.json({"nome" : req.query.nome})
-});
+app.get('/clientes', clienteController.show);
 
-//DELETE
-app.delete('/pessoas/:id', (req, res) => {
-  res.json({  id : req.params.id});
-});
+app.delete('/clientes/:id', clienteController.destroy);
 
-//PUT
-app.put('/pessoas/:nome', (req, res) => {
-  res.json({ nome : req.params.nome });
-});
+app.put('/clientes/:id', clienteController.update);
 
-//POST
-app.use(express.json());
-
-app.post('/pessoas', (req, res) => {
-  res.json(req.body);
-});
-
-
+app.post('/clientes', clienteController.update);
 
 app.listen(config.PORT, function () {
   console.log(`App currently running; navigate to localhost:${config.PORT} in a web browser.`);
