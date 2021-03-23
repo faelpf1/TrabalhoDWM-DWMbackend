@@ -17,7 +17,7 @@ const watching = compiler.watch({
     colors: true    // Shows colors in the console
   }))
   if (stats.hasErrors()) {
-    console.log('didn\' t build')
+    console.log('didnt build');
     return;
   }
   console.log('built');
@@ -42,7 +42,7 @@ app.delete('/clientes/:id', clienteController.destroy);
 
 app.put('/clientes/:id', clienteController.update);
 
-app.post('/clientes', clienteController.update);
+app.post('/clientes', clienteController.store);
 
 app.listen(config.PORT, function () {
   console.log(`App currently running; navigate to localhost:${config.PORT} in a web browser.`);
