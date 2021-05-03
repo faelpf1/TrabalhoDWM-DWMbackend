@@ -10,3 +10,5 @@ const ExampleComponent = () => {
 }
 
 render(<ExampleComponent />, document.getElementById('app'));
+
+//teste de commit no vs code
